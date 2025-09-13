@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  laravel.test:
+    build:
+      context: . # Diretório onde está o Dockerfile
+      dockerfile: Dockerfile
+    image: laravel-app
+    container_name: laravel-app
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/var/www/html # Monta o diretório atual no container
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.0
+    container_name: laravel-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root # Senha do root
+      MYSQL_DATABASE: laravel   # Banco padrão do projeto
+      MYSQL_USER: laravel       # Usuário padrão
+      MYSQL_PASSWORD: laravel   # Senha do usuário
+    ports:
+      - "3306:3306" # Expõe MySQL localmente (para conectar via client)
+    volumes:
+      - db_data:/var/lib/mysql # Persiste os dados do banco
+
+volumes:
+  db_data: # Volume para persistência dos dados do MySQL
