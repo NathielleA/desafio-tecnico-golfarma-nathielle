@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pedido;
+
 use Illuminate\Http\Request;
 
 class PedidoController extends Controller
@@ -22,7 +24,7 @@ class PedidoController extends Controller
     {
         //
         $pedido = Pedido::create($request->all());
-        // return response()->json($pedido, 201);
+        return response()->json($pedido, 201); // Return 201 Created with the new resource
     }
 
     /**
